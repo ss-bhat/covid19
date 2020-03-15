@@ -78,3 +78,9 @@ class CovId19Data(CovIdRequest):
         :return:
         """
         return country_model.show_available_province(self)
+
+    def get_history_by_country(self, country):
+        """"
+        The method returns the history statistics of all country
+        """
+        country_stats.get_history_by_country(self, country)
