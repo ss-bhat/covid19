@@ -1,9 +1,12 @@
-import json
 from covid.model import country
 
 
 def get_total_stats(instance):
-    """This method  returns the total deaths across all countries and also returns total deaths per country"""
+    """
+    This method  returns the total deaths across all countries and also returns total deaths per country.
+    :param instance: instance of the class
+    :return dict
+    """
 
     current_records = country.get_all_records_by_country(instance)
     stats = dict()
@@ -20,6 +23,4 @@ def get_total_stats(instance):
     stats["Recovered"] = recovered
     stats["Active"] = active
 
-    print(stats)
-
-    return json.dumps(stats)
+    return stats
