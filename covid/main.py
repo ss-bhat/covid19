@@ -1,5 +1,5 @@
 from covid.lib.covid_request import CovIdRequest
-from covid.model import country
+from covid.model import country, country_stats
 
 
 class CovId19Data(CovIdRequest):
@@ -7,35 +7,13 @@ class CovId19Data(CovIdRequest):
     def __init__(self, *args, **kwargs):
         CovIdRequest.__init__(self, *args, **kwargs)
 
-    def get_total_deaths(self):
+    def get_total_stats(self):
         """
         Shows the total death till now
         Assign: Vipin
         :return: dict
         """
-
-    def get_total_recovered(self):
-        """
-        Shows total recovered till now
-        Assign: Vipin
-        :return: dict
-        """
-        pass
-
-    def get_total_confirmed(self):
-        """
-        Shows total confirmed cases till now
-        Assign: Vipin
-        :return: dict
-        """
-        pass
-
-    def get_total_active(self):
-        """
-        Shows total active cases till now
-        Assign: Vipin
-        :return: dict
-        """
+        return country_stats.get_total_stats(self)
 
     def get_new_confirmed(self, period=None):
         """

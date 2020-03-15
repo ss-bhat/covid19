@@ -2,7 +2,7 @@ from covid.lib import helper as h
 from dateutil.parser import parse
 
 
-def get_all_records_by_country(instance, show_geometry):
+def get_all_records_by_country(instance, show_geometry=False):
     """
     Collect all confirmed, recovered and deaths for all the countries
     :param instance: class instance
@@ -38,7 +38,6 @@ def get_all_records_by_country(instance, show_geometry):
                 result[_country]['long'] = row.get('Long')
                 if show_geometry:
                     result[_country]['geometry'] = instance.get_polygon_for_country(row.get('Country/Region'))
-
     return result
 
 
