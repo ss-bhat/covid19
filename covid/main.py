@@ -83,4 +83,4 @@ class CovId19Data(CovIdRequest):
         """"
         The method returns the history statistics of all country
         """
-        country_stats.get_history_by_country(self, country)
+        return country_stats.get_history_by_country(self, country)

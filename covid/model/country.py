@@ -1,7 +1,9 @@
 from covid.lib import helper as h, errors
 from dateutil.parser import parse
+from functools import lru_cache
 
 
+@lru_cache(maxsize=10)
 def get_all_records_by_country(instance, show_geometry=False):
     """
     Collect all confirmed, recovered and deaths for all the countries
@@ -41,6 +43,7 @@ def get_all_records_by_country(instance, show_geometry=False):
     return result
 
 
+@lru_cache(maxsize=10)
 def get_all_records_by_provinces(instance):
     """
     Collect all the data if the province column is not null and get corresponding latitude and longitude data
@@ -78,6 +81,7 @@ def get_all_records_by_provinces(instance):
     return result
 
 
+@lru_cache(maxsize=10)
 def show_available_countries(instance):
     """
     Show all the available countries
@@ -96,6 +100,7 @@ def show_available_countries(instance):
     return countries
 
 
+@lru_cache(maxsize=10)
 def show_available_province(instance):
     """
     Show all the available provinces/state
@@ -113,6 +118,7 @@ def show_available_province(instance):
     return regions
 
 
+@lru_cache(maxsize=30)
 def filter_by_country(instance, country, show_geometry=False):
     """
     Show the record given country name
@@ -139,6 +145,7 @@ def filter_by_country(instance, country, show_geometry=False):
                                  "Run available countries method to see all available countries")
 
 
+@lru_cache(maxsize=30)
 def filter_by_province(instance, province):
     """
     Show record for the given province.

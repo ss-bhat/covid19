@@ -1,8 +1,10 @@
-from covid.model import country
+from covid.model import country as country_model
 from covid.lib import helper as h, errors
 from dateutil.parser import parse
-import json
+from functools import lru_cache
 
+
+@lru_cache(maxsize=30)
 def get_total_stats(instance):
     """
     This method  returns the total deaths across all countries and also returns total deaths per country.
@@ -10,7 +12,7 @@ def get_total_stats(instance):
     :return dict
     """
 
-    current_records = country.get_all_records_by_country(instance)
+    current_records = country_model.get_all_records_by_country(instance)
     stats = dict()
     deaths = confirmed = recovered = active = 0
     for key in current_records:
@@ -28,11 +30,42 @@ def get_total_stats(instance):
     return stats
 
 
+"""
 def get_history_by_country(instance, country):
     all_history = list()
-    f_deaths = getattr(instance, "deaths")
-    f_confirmed = getattr(instance, "confirmed")
-    f_recovered = getattr(instance, "recovered")
+    res = None
+    _ct = h.convert_label_to_id(country)
+    for row1, row2, row3 in zip(*[getattr(instance, x) for x in instance._actions_files]):
+        _ct2 = h.convert_label_to_id(row1["Country/Region"])
+        if _ct == _ct2:
+            res = dict()
+            res['hsitory'] = dict()
+            res["label"] = row1["Country/Region"]
+            res["Province"] = h.convert_label_to_id(row1["Province/State"]) if row1.get("Province/State") else ""
+            for item in range(4, len(list(row1.keys()))):
+                _key = list(row1.keys())[item]
+                key = str(parse(_key))
+                res['history'][key] = {
+                    "deaths": int(row1.get(_key)),
+                    "confirmed": int(row2.get(_key)),
+                    "recovered": int(row3.get(_key))
+                }
+
+            res["lastUpdate"] = list(row1.keys())[-1]
+            return res
+
+    raise errors.CountryNotFound("Given country not found.")
+"""
+
+
+@lru_cache(maxsize=10)
+def get_history_by_country(instance, country):
+    """
+    History of all the available cases for the given data.
+    :param instance: instance of the class
+    :param country: str
+    :return: dict
+    """
     _country_id = h.convert_label_to_id(country)
     result = dict()
     for _action in instance._actions_files:
@@ -61,37 +94,17 @@ def get_history_by_country(instance, country):
                     result[_country_id] = dict()
                     result[_country_id]['label'] = row.get('Country/Region')
                     result[_country_id]['lat'] = row.get('Lat')
-                    result[_country_id]['lat'] = row.get('Long')
+                    result[_country_id]['long'] = row.get('Long')
                     result[_country_id]['history'] = dict()
                     for key in row:
                         try:
                             _item = str(parse(key))
-                            _history = result[_country_id]['history'][_item] = dict()
+                            _history = result[_country_id]['history']
                             _history[_item] = dict()
                             _history[_item][_action] = int(row.get(key))
                         except Exception as e:
                             pass
-                break
-    print(result)
-
-    if not result:
+    if result:
+        return result
+    else:
         raise errors.CountryNotFound("Given country not found")
-    """
-    for row1, row2, row3 in zip(f_deaths, f_confirmed, f_recovered):
-        print(row1)
-        d = dict()
-        for item in range(4, len(list(row1.keys()))):
-            _key = list(row1.keys())[item]
-            _country = h.convert_label_to_id(row1["Country/Region"])
-            d["Country"] = _country
-            d["Province"] = h.convert_label_to_id(row1["Province/State"]) if row1.get("Province/State") else ""
-
-            d[_key] = {"deaths": int(row1.get(_key)),
-                       "confirmed": int(row2.get(_key)),
-                       "recovered": int(row3.get(_key))}
-            break
-        break
-        d["lastUpdate"] = list(row1.keys())[-1]
-        all_history.append(d)
-
-    return all_history"""
