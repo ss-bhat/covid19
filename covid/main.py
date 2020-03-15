@@ -1,5 +1,5 @@
 from covid.lib.covid_request import CovIdRequest
-from covid.model import country, country_stats
+from covid.model import country as country_model, country_stats
 
 
 class CovId19Data(CovIdRequest):
@@ -7,7 +7,7 @@ class CovId19Data(CovIdRequest):
     def __init__(self, *args, **kwargs):
         CovIdRequest.__init__(self, *args, **kwargs)
 
-    def get_total_stats(self):
+    def get_stats(self):
         """
         Shows the total death till now
         Assign: Vipin
@@ -25,7 +25,7 @@ class CovId19Data(CovIdRequest):
 
     def get_new_recovered_by_country(self, period=None):
         """
-        Periods should be current month or one manth previous data. No old data should be shown
+        Periods should be current month or one month previous data. No old data should be shown
         :param period:
         :return:
         """
@@ -37,7 +37,7 @@ class CovId19Data(CovIdRequest):
         confirmed, deaths and recovered.
         :return: dict
         """
-        return country.get_all_records_by_country(self, show_geometry)
+        return country_model.get_all_records_by_country(self, show_geometry)
 
     def get_all_records_by_provinces(self):
         """
@@ -45,34 +45,36 @@ class CovId19Data(CovIdRequest):
         confirmed, deaths and recovered.
         :return: dict
         """
-        return country.get_all_records_by_provinces(self)
+        return country_model.get_all_records_by_provinces(self)
 
-    def filter_by_country(self, show_geometry=False):
+    def filter_by_country(self, country, show_geometry=False):
         """
         Extract the record for a given country. If show_geometry=True. Coordinates of the country will be shown.
         If no match in the country. Empty records are show
         :param show_geometry: boolean
+        :param country: str
         :return: dict
         """
-        pass
 
-    def filter_by_province(self):
+        return country_model.filter_by_country(self, country, show_geometry=show_geometry)
+
+    def filter_by_province(self, province):
         """
         Extract the record for a given province. If no province matched. Empty data is extracted.
         :return: dict
         """
-        pass
+        return country_model.filter_by_province(self, province)
 
     def show_available_countries(self):
         """
         Show all the available countries
         :return: dict
         """
-        return country.show_available_countries(self)
+        return country_model.show_available_countries(self)
 
     def show_available_regions(self):
         """
         Show all the available provinces/state
         :return:
         """
-        return country.show_available_province(self)
+        return country_model.show_available_province(self)

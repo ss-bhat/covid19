@@ -1,4 +1,4 @@
-from covid.lib import helper as h
+from covid.lib import helper as h, errors
 from dateutil.parser import parse
 
 
@@ -90,16 +90,15 @@ def show_available_countries(instance):
         "recovered"
     )
 
-    res = dict()
+    countries = []
 
     for _item in _actions:
         reader = getattr(instance, _item)
-        res[_item] = []
         for row in reader:
             _ctry = dict(row).get("Country/Region")
-            if _ctry not in res[_item]:
-                res[_item].append(_ctry)
-    return res
+            if _ctry not in countries:
+                countries.append(_ctry)
+    return countries
 
 
 def show_available_province(instance):
@@ -108,13 +107,61 @@ def show_available_province(instance):
     :param instance: class instance
     :return: dict
     """
-    res = dict()
+    regions = []
 
     for _item in instance._actions_files.keys():
         reader = getattr(instance, _item)
-        res[_item] = []
         for row in reader:
             province = dict(row).get("Province/State")
-            if province and (province not in res[_item]):
-                res[_item].append(province)
-    return res
+            if province and (province not in regions):
+                regions.append(province)
+    return regions
+
+
+def filter_by_country(instance, country, show_geometry=False):
+    """
+    Show the record given country name
+    :param instance: instance of the class
+    :param country: str
+    :param show_geometry: boolean
+    :return: dict
+    """
+    if not country:
+        raise errors.ValidationError("Missing parameter country")
+
+    _countries = get_all_records_by_country(instance)
+    country_id = h.convert_label_to_id(country)
+
+    for _country in _countries:
+        if country_id == _country:
+            res = _countries.get(_country)
+            if show_geometry:
+                res['geometry'] = instance.get_polygon_for_country(country)
+                return res
+            else:
+                return res
+    raise errors.CountryNotFound("Given country not found. "
+                                 "Run available countries method to see all available countries")
+
+
+def filter_by_province(instance, province):
+    """
+    Show record for the given province.
+    :param instance: instance of the class
+    :param province: str
+    :return: dict
+    """
+    if not province:
+        raise errors.ValidationError("Missing value province")
+
+    _provinces = get_all_records_by_provinces(instance)
+    province_id = h.convert_label_to_id(province)
+
+    for _province in _provinces:
+        if province_id == _province:
+            res = _provinces.get(province_id)
+            return res
+
+    raise errors.ProvinceNotFound("Given province not found. "
+                                  "Run available provinces method to see all available provinces")
+

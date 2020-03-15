@@ -6,3 +6,15 @@ class CovidBaseException(Exception):
 
 class ActionNotFoundError(CovidBaseException):
     pass
+
+
+class CountryNotFound(CovidBaseException):
+    pass
+
+
+class ProvinceNotFound(CovidBaseException):
+    pass
+
+
+class ValidationError(CovidBaseException):
+    pass
