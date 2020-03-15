@@ -39,9 +39,10 @@ class CovIdRequest:
     }
 
     def __init__(self, *args, **kwargs):
+
         self._url = kwargs.get("_url", CovIdRequest._URL)  # In case if the source url is changed.
         self._headers = kwargs.get("_headers", CovIdRequest._headers)
-        self._data_dir_path = "{}/{}".format(os.path.dirname(os.path.realpath(__file__)), "data")
+        self._data_dir_path = "{}/{}".format(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), "data")
         self._current_date = datetime.datetime.strptime(str(datetime.datetime.now().date()), "%Y-%m-%d")
         self._actions_files = kwargs.get("_actions_files", CovIdRequest._actions_files)
         self.force_refresh = kwargs.get("force", False)
@@ -109,6 +110,7 @@ class CovIdRequest:
         :param file_name: str file_name
         :return: None
         """
+
         _f = "{}/{}".format(self._data_dir_path, file_name)
         with open(_f, 'w') as f:
             f.write(content)
