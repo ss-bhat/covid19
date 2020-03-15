@@ -1,4 +1,5 @@
-from covid19.covid.lib import errors
+from covid.lib import errors
+from covid.lib.loader import CovId19Data
 import requests
 import os
 import datetime
@@ -8,7 +9,7 @@ log = logging.getLogger()
 log.setLevel(logging.DEBUG)
 
 
-class CovIdRequest:
+class CovIdRequest(CovId19Data):
     """
     This module sends the get request for the covid-19 git repository and downloads all the csv files and saves
     in the data directory. Stored file is refreshed only when current date is greater than the stored date.
@@ -32,20 +33,12 @@ class CovIdRequest:
         "User-Agent": "python-covid19"
     }
 
-    _actions_files = {
-        "confirmed": "time_series_19-covid-Confirmed.csv",
-        "deaths": "time_series_19-covid-Deaths.csv",
-        "recovered": "time_series_19-covid-Recovered.csv"
-    }
-
     def __init__(self, *args, **kwargs):
-
         self._url = kwargs.get("_url", CovIdRequest._URL)  # In case if the source url is changed.
         self._headers = kwargs.get("_headers", CovIdRequest._headers)
-        self._data_dir_path = "{}/{}".format(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), "data")
         self._current_date = datetime.datetime.strptime(str(datetime.datetime.now().date()), "%Y-%m-%d")
-        self._actions_files = kwargs.get("_actions_files", CovIdRequest._actions_files)
         self.force_refresh = kwargs.get("force", False)
+        CovId19Data.__init__(self, *args, **kwargs)
         self.run()
 
     def __repr__(self):

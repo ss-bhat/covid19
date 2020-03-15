@@ -1,4 +1,5 @@
-from covid19.covid.lib.covid_request import CovIdRequest
+from covid.lib.covid_request import CovIdRequest
+from covid.model import country
 
 
 class CovId19Data(CovIdRequest):
@@ -56,7 +57,7 @@ class CovId19Data(CovIdRequest):
         pass
 
     def get_all_country_data(self):
-        pass
+        country.get_all_country_data(self)
 
     def get_all_records_for_country(self, country=None):
         pass
