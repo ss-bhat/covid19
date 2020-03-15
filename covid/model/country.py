@@ -29,7 +29,7 @@ def get_all_records_by_country(instance, show_geometry=False):
                 else:
                     _cnty_data[_action] = _val
             else:
-                # Dict structure of the return data
+                # Data model for the new record
                 result[_country] = dict()
                 result[_country][_action] = _val
                 result[_country]['label'] = row.get('Country/Region')
@@ -66,7 +66,7 @@ def get_all_records_by_provinces(instance):
                     else:
                         _province_data[_action] = _val
                 else:
-                    # Dict structure of the return data
+                    # Data model for the new record
                     result[_province] = dict()
                     result[_province][_action] = _val
                     result[_province]['label'] = _province_label
@@ -84,15 +84,10 @@ def show_available_countries(instance):
     :param instance: class instance
     :return: dict
     """
-    _actions = (
-        "confirmed",
-        "deaths",
-        "recovered"
-    )
 
     countries = []
 
-    for _item in _actions:
+    for _item in instance._actions_files.keys():
         reader = getattr(instance, _item)
         for row in reader:
             _ctry = dict(row).get("Country/Region")
