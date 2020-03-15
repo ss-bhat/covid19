@@ -1,4 +1,4 @@
-from covid.base import CovIdRequest
+from covid19.covid.lib.covid_request import CovIdRequest
 
 
 class CovId19Data(CovIdRequest):
