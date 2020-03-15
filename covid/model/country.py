@@ -2,10 +2,11 @@ from covid.lib import helper as h
 from dateutil.parser import parse
 
 
-def get_all_records_by_country(instance):
+def get_all_records_by_country(instance, show_geometry):
     """
     Collect all confirmed, recovered and deaths for all the countries
     :param instance: class instance
+    :param show_geometry: boolean (if true show a multi polygon coordinates)
     :return: dict
     """
     result = dict()
@@ -33,6 +34,10 @@ def get_all_records_by_country(instance):
                 result[_country][_action] = _val
                 result[_country]['label'] = row.get('Country/Region')
                 result[_country]['last_updated'] = str(parse(_key))
+                result[_country]['lat'] = row.get('Lat')
+                result[_country]['long'] = row.get('Long')
+                if show_geometry:
+                    result[_country]['geometry'] = instance.get_polygon_for_country(row.get('Country/Region'))
 
     return result
 
