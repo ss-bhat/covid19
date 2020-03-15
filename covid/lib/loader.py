@@ -17,8 +17,9 @@ class CovId19Data:
 
     def _assign_loader(self):
         for _action in self._actions_files:
-            with open("{}/{}".format(self._data_dir_path, self._actions_files[_action])) as f:
-                setattr(self, _action, csv.DictReader(f))
+
+            setattr(self, _action, csv.DictReader(open(
+                "{}/{}".format(self._data_dir_path, self._actions_files[_action]), 'r')))
 
 
 

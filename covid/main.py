@@ -53,20 +53,32 @@ class CovId19Data(CovIdRequest):
         """
         pass
 
-    def get_all_regional_data(self):
-        pass
+    def get_all_records_by_country(self):
+        """
+        Get all the records for all the countries. This will return the latest values of
+        confirmed, deaths and recovered.
+        :return: dict
+        """
+        return country.get_all_records_by_country(self)
 
-    def get_all_country_data(self):
-        country.get_all_country_data(self)
-
-    def get_all_records_for_country(self, country=None):
-        pass
-
-    def get_all_records_for_region(self, region=None):
-        pass
+    def get_all_records_by_provinces(self):
+        """
+        Get all the records for all the provinces/state. This will return the latest values of
+        confirmed, deaths and recovered.
+        :return: dict
+        """
+        return country.get_all_records_by_provinces(self)
 
     def show_available_countries(self):
-        pass
+        """
+        Show all the available countries
+        :return: dict
+        """
+        return country.show_available_countries(self)
 
     def show_available_regions(self):
-        pass
+        """
+        Show all the available provinces/state
+        :return:
+        """
+        return country.show_available_province(self)
