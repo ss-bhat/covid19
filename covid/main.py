@@ -15,7 +15,7 @@ class CovId19Data(CovIdRequest):
         """
         return country_stats.get_total_stats(self)
 
-    def get_new_confirmed(self, period=None):
+    def get_new_confirmed_by_country(self, period=None):
         """
         Periods should be current month or one manth previous data. No old data should be shown
         :param period:
@@ -23,7 +23,7 @@ class CovId19Data(CovIdRequest):
         """
         pass
 
-    def get_new_recovered(self, period=None):
+    def get_new_recovered_by_country(self, period=None):
         """
         Periods should be current month or one manth previous data. No old data should be shown
         :param period:
