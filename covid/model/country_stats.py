@@ -31,6 +31,9 @@ def get_total_stats(instance):
 
 
 """
+# Using zip is faster
+ TODO: How to handle uneven length of the data?
+ TODO: What if the number of columns is larger?
 def get_history_by_country(instance, country):
     all_history = list()
     res = None
@@ -58,6 +61,41 @@ def get_history_by_country(instance, country):
 """
 
 
+def _update_history(row, result, _country_id, _action, _previous_value):
+    """
+    Updates the history if the country id already exists in the result dictionary
+    :param row: csv DictWriter OrderdDict
+    :param result: dict
+    :param _country_id: str
+    :param _action: str
+    :param _previous_value: str
+    :return: dict
+    """
+    for key in row:
+        try:
+            _item = str(parse(key))
+            _current_value = row.get(key)
+            if _item in result[_country_id]['history']:
+                if _action in result[_country_id]['history'][_item]:
+                    result[_country_id]['history'][_item][_action] += int(row.get(key))
+                else:
+                    result[_country_id]['history'][_item][_action] = int(row.get(key))
+            else:
+                # This should not occur
+                # Only this occurs when the length/rows are of unequal sizes
+                result[_country_id]['history'][_item] = dict()
+                result[_country_id]['history'][_item][_action] = int(row.get(key))
+
+            result[_country_id]['history'][_item]["change_{}".format(_action)] = h.calculate_change(
+                _current_value, _previous_value
+            )
+            _previous_value = _current_value
+        except Exception as e:
+            pass
+
+    return result
+
+
 @lru_cache(maxsize=10)
 def get_history_by_country(instance, country):
     """
@@ -74,36 +112,28 @@ def get_history_by_country(instance, country):
             _country = h.convert_label_to_id(row.get('Country/Region'))
             if _country_id == _country:
                 if _country_id in result:
-                    for key in row:
-                        try:
-                            _item = str(parse(key))
-                            if _item in result[_country_id]['history']:
-                                if _action in result[_country_id]['history'][_item]:
-                                    result[_country_id]['history'][_item][_action] += int(row.get(key))
-                                else:
-                                    result[_country_id]['history'][_item][_action] = int(row.get(key))
-                            else:
-                                # This should not occur
-                                # Only this occurs when the length/rows are of unequal sizes
-                                result[_country_id]['history'][_item] = dict()
-                                result[_country_id]['history'][_item][_action] = int(row.get(key))
-                        except Exception as e:
-                            pass
-
+                    _previous_value = ''
+                    result = _update_history(row, result, _country_id, _action, _previous_value)
                 else:
                     result[_country_id] = dict()
                     result[_country_id]['label'] = row.get('Country/Region')
                     result[_country_id]['lat'] = row.get('Lat')
                     result[_country_id]['long'] = row.get('Long')
                     result[_country_id]['history'] = dict()
+                    _previous_value = ''
+
                     for key in row:
                         try:
                             _item = str(parse(key))
+                            _current_value = row.get(key)
                             _history = result[_country_id]['history']
                             _history[_item] = dict()
-                            _history[_item][_action] = int(row.get(key))
+                            _history[_item][_action] = int(_current_value)
+                            _history[_item]["change_{}".format(_action)] = h.calculate_change(
+                                _current_value, _previous_value)
+                            _previous_value = _current_value
                         except Exception as e:
-                            pass
+                            print(e)
     if result:
         return result
     else:
