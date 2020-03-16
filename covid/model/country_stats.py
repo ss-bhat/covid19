@@ -11,22 +11,12 @@ def get_total_stats(instance):
     :param instance: instance of the class
     :return dict
     """
-
-    current_records = country_model.get_all_records_by_country(instance)
     stats = dict()
-    deaths = confirmed = recovered = active = 0
-    for key in current_records:
-        current_stats = current_records.get(key)
-        deaths += current_stats.get('deaths')
-        confirmed += current_stats.get('confirmed')
-        recovered += current_stats.get('recovered')
-
-    active = confirmed - recovered - deaths
-    stats["Deaths"] = deaths
-    stats["Confirmed"] = confirmed
-    stats["Recovered"] = recovered
-    stats["Active"] = active
-
+    current_records = country_model.get_all_records_by_country(instance)
+    for _country_id in current_records:
+        for _action in instance._actions_files:
+            stats[_action] = stats.get(_action, 0) + current_records[_country_id][_action]
+            
     return stats
 
 
@@ -44,6 +34,7 @@ def _update_history(row, result, _country_id, _action, _previous_value):
         try:
             _item = str(parse(key))
             _current_value = row.get(key)
+            # If the history (date) already exists update the value and its action.
             if _item in result[_country_id]['history']:
                 if _action in result[_country_id]['history'][_item]:
                     result[_country_id]['history'][_item][_action] += int(row.get(key))
@@ -58,6 +49,8 @@ def _update_history(row, result, _country_id, _action, _previous_value):
             result[_country_id]['history'][_item]["change_{}".format(_action)] = h.calculate_change(
                 _current_value, _previous_value
             )
+
+            # Assign previous value to current to calculate the next change
             _previous_value = _current_value
         except Exception as e:
             pass
@@ -69,6 +62,7 @@ def _update_history(row, result, _country_id, _action, _previous_value):
 def get_history_by_country(instance, country):
     """
     History of all the available cases for the given data.
+    If no change can be calculated value = 'na' is assigned
     :param instance: instance of the class
     :param country: str
     :return: dict
@@ -79,11 +73,16 @@ def get_history_by_country(instance, country):
         reader = getattr(instance, _action)
         for row in reader:
             _country = h.convert_label_to_id(row.get('Country/Region'))
+            # if given country
             if _country_id == _country:
+                # If country exists in dict
                 if _country_id in result:
                     _previous_value = ''
+                    # Update the existing dict and calculate change in value
                     result = _update_history(row, result, _country_id, _action, _previous_value)
                 else:
+                    # Only executed for the action = confirmed (for the first time)
+                    # new data
                     result[_country_id] = dict()
                     result[_country_id]['label'] = row.get('Country/Region')
                     result[_country_id]['lat'] = row.get('Lat')
@@ -98,8 +97,11 @@ def get_history_by_country(instance, country):
                             _history = result[_country_id]['history']
                             _history[_item] = dict()
                             _history[_item][_action] = int(_current_value)
+                            # Calculate the change in value
                             _history[_item]["change_{}".format(_action)] = h.calculate_change(
                                 _current_value, _previous_value)
+
+                            # Assign previous value to current to calculate the next change
                             _previous_value = _current_value
                         except Exception as e:
                             print(e)
