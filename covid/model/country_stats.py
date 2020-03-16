@@ -30,37 +30,6 @@ def get_total_stats(instance):
     return stats
 
 
-"""
-# Using zip is faster
- TODO: How to handle uneven length of the data?
- TODO: What if the number of columns is larger?
-def get_history_by_country(instance, country):
-    all_history = list()
-    res = None
-    _ct = h.convert_label_to_id(country)
-    for row1, row2, row3 in zip(*[getattr(instance, x) for x in instance._actions_files]):
-        _ct2 = h.convert_label_to_id(row1["Country/Region"])
-        if _ct == _ct2:
-            res = dict()
-            res['hsitory'] = dict()
-            res["label"] = row1["Country/Region"]
-            res["Province"] = h.convert_label_to_id(row1["Province/State"]) if row1.get("Province/State") else ""
-            for item in range(4, len(list(row1.keys()))):
-                _key = list(row1.keys())[item]
-                key = str(parse(_key))
-                res['history'][key] = {
-                    "deaths": int(row1.get(_key)),
-                    "confirmed": int(row2.get(_key)),
-                    "recovered": int(row3.get(_key))
-                }
-
-            res["lastUpdate"] = list(row1.keys())[-1]
-            return res
-
-    raise errors.CountryNotFound("Given country not found.")
-"""
-
-
 def _update_history(row, result, _country_id, _action, _previous_value):
     """
     Updates the history if the country id already exists in the result dictionary
