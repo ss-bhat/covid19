@@ -14,7 +14,7 @@ This package makes **COVID-19** data available through python API. All the data 
 
 #### Initialising the instance/api:
 ```
-from covid.main import CovId19Data
+from covid.api import CovId19Data
 
 api = CovId19Data(force=False)
 ```
