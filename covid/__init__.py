@@ -1,1 +1,1 @@
-from covid.main import CovId19Data
+from covid.api import CovId19Data

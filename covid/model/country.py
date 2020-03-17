@@ -15,7 +15,7 @@ def get_total_stats(instance):
     for _country_id in current_records:
         for _action in instance._actions_files:
             stats[_action] = stats.get(_action, 0) + current_records[_country_id][_action]
-
+        stats['last_updated'] = current_records[_country_id]['last_updated']
     return stats
 
 
