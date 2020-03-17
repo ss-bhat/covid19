@@ -11,7 +11,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 
 setup(
-    name='covid',  # Required
+    name='covid-data-api',  # Required
     version='1.0',
     description="""
                 Real time data extractor - web scrapper for covid19 from john hopkins university
