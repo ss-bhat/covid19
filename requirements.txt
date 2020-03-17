@@ -1,0 +1,17 @@
+asn1crypto==1.3.0
+certifi==2019.11.28
+cffi==1.14.0
+chardet==3.0.4
+# Editable install with no version control (covid==1.0)
+-e /Users/swaroop/Documents/covid19/covid/lib/python3.6/site-packages/covid-1.0-py3.6.egg
+cryptography==2.8
+idna==2.8
+memory-profiler==0.57.0
+psutil==5.7.0
+pycparser==2.19
+pyOpenSSL==19.1.0
+PySocks==1.7.1
+python-dateutil==2.8.1
+requests==2.23.0
+six==1.14.0
+urllib3==1.25.8

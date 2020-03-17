@@ -38,6 +38,8 @@ setup(
 
     # All install packages should go on requirements.txt file
     install_requires=[
+        'python-dateutil==2.8.1',
+        'requests==2.23.0'
     ],
     extras_require={
     },
