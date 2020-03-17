@@ -24,11 +24,9 @@ setup(
     author_email='',
     license="MIT",
     classifiers=[  # Optional
-        'Development Status :: 1 - Beta',
-        'Intended Audience :: Developers',
-        'Topic : Corona Virus data',
-        'License : MIT License',
-        'Programming Language :: Python :: 3.6'
+	"License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
     ],
     keywords='Data extractor covid19',
     packages=find_packages(
