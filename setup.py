@@ -12,7 +12,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='covid-data-api',  # Required
-    version='1.0',
+    version='1.1',
     description="""
                 Real time data extractor - web scrapper for covid19 from john hopkins university
                 url: https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6
