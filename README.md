@@ -71,6 +71,9 @@ Shows all the state/province metrics confirmed, recovered and deaths for the dat
  
 All used data sources [CSSEGISandData-covi19](https://github.com/CSSEGISandData/COVID-19#2019-novel-coronavirus-covid-19-2019-ncov-data-repository-by-johns-hopkins-csse).
   
+## Support and Maintanance:
+
+Please raise an issues with issues of this git repo. This is not actively supported, however anyone with the interest can solve the raised issues.
 
 ## Copying and License
 ##### Terms and conditions of the data provider:
