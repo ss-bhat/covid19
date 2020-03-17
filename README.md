@@ -3,10 +3,14 @@
 This package makes **COVID-19** data available through python API. All the data are directy taken from the [CSSEGISandData-covi19](https://github.com/CSSEGISandData/COVID-19#2019-novel-coronavirus-covid-19-2019-ncov-data-repository-by-johns-hopkins-csse) with the below mentioned data sources. There are several methods to extract the statistics and counts for the coutry or province.
 
 ## Installation:
-##### PyPI:
+#### PyPI:
 
-##### From GitHub:
+#### GitHub:
+  * Clone this repo.
+  * pip install -r requirements.txt
+  * pip install covid
 
+## Usage Instructuions:
 
 ## Data Sources:
   * World Health Organization (WHO): https://www.who.int/
