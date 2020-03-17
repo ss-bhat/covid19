@@ -3,6 +3,22 @@ from dateutil.parser import parse
 from functools import lru_cache
 
 
+@lru_cache(maxsize=30)
+def get_total_stats(instance):
+    """
+    This method  returns the total deaths across all countries and also returns total deaths per country.
+    :param instance: instance of the class
+    :return dict
+    """
+    stats = dict()
+    current_records = get_all_records_by_country(instance)
+    for _country_id in current_records:
+        for _action in instance._actions_files:
+            stats[_action] = stats.get(_action, 0) + current_records[_country_id][_action]
+
+    return stats
+
+
 @lru_cache(maxsize=10)
 def get_all_records_by_country(instance, show_geometry=False):
     """

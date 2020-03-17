@@ -1,5 +1,5 @@
 from covid.lib.covid_request import CovIdRequest
-from covid.model import country as country_model, country_stats
+from covid.model import country as country_model, history
 
 
 class CovId19Data(CovIdRequest):
@@ -13,23 +13,7 @@ class CovId19Data(CovIdRequest):
         Assign: Vipin
         :return: dict
         """
-        return country_stats.get_total_stats(self)
-
-    def get_new_confirmed_by_country(self, period=None):
-        """
-        Periods should be current month or one manth previous data. No old data should be shown
-        :param period:
-        :return:
-        """
-        pass
-
-    def get_new_recovered_by_country(self, period=None):
-        """
-        Periods should be current month or one month previous data. No old data should be shown
-        :param period:
-        :return:
-        """
-        pass
+        return country_model.get_total_stats(self)
 
     def get_all_records_by_country(self, show_geometry=False):
         """
@@ -83,4 +67,10 @@ class CovId19Data(CovIdRequest):
         """"
         The method returns the history statistics of all country
         """
-        return country_stats.get_history_by_country(self, country)
+        return history.get_history_by_country(self, country)
+
+    def get_history_by_province(self, province):
+        """"
+        The method returns the history statistics of all country
+        """
+        return history.get_history_by_province(self, province)

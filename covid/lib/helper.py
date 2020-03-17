@@ -1,3 +1,4 @@
+import string
 import logging
 
 
@@ -9,6 +10,7 @@ def convert_label_to_id(val):
     """
     try:
         val = val.lower()
+        val = val.translate(str.maketrans('', '', string.punctuation))
         val = "_".join(val.split(" "))
 
         return val
