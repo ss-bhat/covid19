@@ -8,7 +8,6 @@ This package makes **COVID-19** data available through python API. All the data 
 #### GitHub:
   * Clone this repo.
   * pip install -r requirements.txt
-  * pip install covid
   * python setup.py install
 
 ## Usage Instructuions:
