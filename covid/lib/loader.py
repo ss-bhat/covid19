@@ -21,6 +21,11 @@ class CovId19Data:
     def __init__(self, *args, **kwargs):
         self._data_dir_path = "{}/{}".format(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), "data")
         self._actions_files = kwargs.get("_actions_files", CovId19Data._actions_files)
+        self._make_dir()
+
+    def _make_dir(self):
+        if not os.path.exists(self._data_dir_path):
+            os.makedirs(self._data_dir_path)
 
     def _assign_loader(self):
         for _action in self._actions_files:
