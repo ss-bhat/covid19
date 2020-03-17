@@ -1,5 +1,14 @@
-#### Data Sources:
+## COVID-19 Real Time Data API
 
+This package makes **COVID-19** data available through python API. All the data are directy taken from the [CSSEGISandData-covi19](https://github.com/CSSEGISandData/COVID-19#2019-novel-coronavirus-covid-19-2019-ncov-data-repository-by-johns-hopkins-csse) with the below mentioned data sources. There are several methods to extract the statistics and counts for the coutry or province.
+
+## Installation:
+##### PyPI:
+
+##### From GitHub:
+
+
+## Data Sources:
   * World Health Organization (WHO): https://www.who.int/
   * DXY.cn. Pneumonia. 2020. http://3g.dxy.cn/newh5/view/pneumonia.
   * BNO News: https://bnonews.com/index.php/2020/02/the-latest-coronavirus-cases/
@@ -16,8 +25,9 @@
   * Italy Ministry of Health: http://www.salute.gov.it/nuovocoronavirus
 
 
-#### For terms and conditions of the data provider. Please see the below url:
+## Copying and License
+##### Terms and conditions of the data provider:
+[CSSEGISandData-covi19](https://github.com/CSSEGISandData/COVID-19#2019-novel-coronavirus-covid-19-2019-ncov-data-repository-by-johns-hopkins-csse)
 
-https://github.com/CSSEGISandData/COVID-19#2019-novel-coronavirus-covid-19-2019-ncov-data-repository-by-johns-hopkins-csse
-
-#### Terms and Condition for the availabe codes are as per MIT License given in this repo.
+##### Terms and Condition of this repo:
+License: [MIT](https://github.com/gtkChop/covid19/blob/master/LICENSE)
