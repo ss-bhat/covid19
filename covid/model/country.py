@@ -20,11 +20,10 @@ def get_total_stats(instance):
 
 
 @lru_cache(maxsize=10)
-def get_all_records_by_country(instance, show_geometry=False):
+def get_all_records_by_country(instance):
     """
     Collect all confirmed, recovered and deaths for all the countries
     :param instance: class instance
-    :param show_geometry: boolean (if true show a multi polygon coordinates)
     :return: dict
     """
     result = dict()
@@ -54,8 +53,6 @@ def get_all_records_by_country(instance, show_geometry=False):
                 result[_country]['last_updated'] = str(parse(_key))
                 result[_country]['lat'] = row.get('Lat')
                 result[_country]['long'] = row.get('Long')
-                if show_geometry:
-                    result[_country]['geometry'] = instance.get_polygon_for_country(row.get('Country/Region'))
     return result
 
 
@@ -135,12 +132,11 @@ def show_available_province(instance):
 
 
 @lru_cache(maxsize=30)
-def filter_by_country(instance, country, show_geometry=False):
+def filter_by_country(instance, country):
     """
     Show the record given country name
     :param instance: instance of the class
     :param country: str
-    :param show_geometry: boolean
     :return: dict
     """
     if not country:
@@ -152,11 +148,7 @@ def filter_by_country(instance, country, show_geometry=False):
     for _country in _countries:
         if country_id == _country:
             res = _countries.get(_country)
-            if show_geometry:
-                res['geometry'] = instance.get_polygon_for_country(country)
-                return res
-            else:
-                return res
+            return res
     raise errors.CountryNotFound("Given country not found. "
                                  "Run available countries method to see all available countries")
 

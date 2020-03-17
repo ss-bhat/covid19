@@ -15,13 +15,13 @@ class CovId19Data(CovIdRequest):
         """
         return country_model.get_total_stats(self)
 
-    def get_all_records_by_country(self, show_geometry=False):
+    def get_all_records_by_country(self):
         """
         Get all the records for all the countries. This will return the latest values of
         confirmed, deaths and recovered.
         :return: dict
         """
-        return country_model.get_all_records_by_country(self, show_geometry)
+        return country_model.get_all_records_by_country(self)
 
     def get_all_records_by_provinces(self):
         """
@@ -31,16 +31,15 @@ class CovId19Data(CovIdRequest):
         """
         return country_model.get_all_records_by_provinces(self)
 
-    def filter_by_country(self, country, show_geometry=False):
+    def filter_by_country(self, country):
         """
-        Extract the record for a given country. If show_geometry=True. Coordinates of the country will be shown.
+        Extract the record for a given country.
         If no match in the country. Empty records are show
-        :param show_geometry: boolean
         :param country: str
         :return: dict
         """
 
-        return country_model.filter_by_country(self, country, show_geometry=show_geometry)
+        return country_model.filter_by_country(self, country)
 
     def filter_by_province(self, province):
         """

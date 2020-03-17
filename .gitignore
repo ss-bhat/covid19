@@ -31,6 +31,12 @@ node_modules/
 # docker
 contrib/docker/.env
 
+data/*
+
+time_series_19-covid-Confirmed.csv
+time_series_19-covid-Deaths.csv
+time_series_19-covid-Recovered.csv
+
 __pycache__
 
 

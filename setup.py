@@ -19,9 +19,10 @@ setup(
                 """,
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='',
+    url='https://github.com/gtkChop/covid19',
     author='Swaroop',
-    author_email='swaroopbatk@gmail.com',
+    author_email='',
+    license="MIT",
     classifiers=[  # Optional
         'Development Status :: 1 - Beta',
         'Intended Audience :: Developers',

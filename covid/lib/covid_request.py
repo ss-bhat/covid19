@@ -167,4 +167,5 @@ class CovIdRequest(CovId19Data):
         :return:
         """
         self._process()
+        self._assign_loader()
 
