@@ -10,7 +10,7 @@ This package makes **COVID-19** data available through python API. All the data 
   * pip install -r requirements.txt
   * python setup.py install
 
-## Usage Instructuions:
+## How to user:
 
 #### Initialising the instance/api:
 ```
@@ -71,7 +71,7 @@ Shows all the state/province metrics confirmed, recovered and deaths for the dat
  
 All used data sources [CSSEGISandData-covi19](https://github.com/CSSEGISandData/COVID-19#2019-novel-coronavirus-covid-19-2019-ncov-data-repository-by-johns-hopkins-csse).
   
-## Support and Maintanance:
+## Support and Maintenance:
 
 Please raise an issues with issues of this git repo. This is not actively supported, however anyone with the interest can solve the raised issues.
 
