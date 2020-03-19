@@ -29,7 +29,7 @@ def get_all_records_by_country(instance):
     result = dict()
 
     for _action in instance._actions_files.keys():
-        reader = getattr(instance, _action)
+        reader = instance.get_reader(_action)
         # Dict reader of the respective action
         for row in reader:
             # Country id
@@ -67,7 +67,7 @@ def get_all_records_by_provinces(instance):
     result = dict()
 
     for _action in instance._actions_files.keys():
-        reader = getattr(instance, _action)
+        reader = instance.get_reader(_action)
         for row in reader:
             _province_label = row.get('Province/State')
             if _province_label:
@@ -105,7 +105,7 @@ def show_available_countries(instance):
     countries = []
 
     for _item in instance._actions_files.keys():
-        reader = getattr(instance, _item)
+        reader = instance.get_reader(_item)
         for row in reader:
             _ctry = dict(row).get("Country/Region")
             if _ctry not in countries:
@@ -123,7 +123,7 @@ def show_available_province(instance):
     regions = []
 
     for _item in instance._actions_files.keys():
-        reader = getattr(instance, _item)
+        reader = instance.get_reader(_item)
         for row in reader:
             province = dict(row).get("Province/State")
             if province and (province not in regions):

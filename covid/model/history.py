@@ -52,8 +52,9 @@ def _get_history_data(instance, country_province, column_label):
     """
     _country_province_id = h.convert_label_to_id(country_province)
     result = dict()
+
     for _action in instance._actions_files:
-        reader = getattr(instance, _action)
+        reader = instance.get_reader(_action)
         for row in reader:
             _country = h.convert_label_to_id(row.get(column_label))
             # if given country
@@ -94,7 +95,7 @@ def _get_history_data(instance, country_province, column_label):
         raise errors.CountryNotFound("Given {} not found".format(column_label))
 
 
-@lru_cache(maxsize=10)
+@lru_cache(maxsize=30)
 def get_history_by_country(instance, country):
     """
     Get all the history data for the given country
@@ -104,6 +105,7 @@ def get_history_by_country(instance, country):
     """
     _label = 'Country/Region'
     res = _get_history_data(instance, country, _label)
+
     return res
 
 
