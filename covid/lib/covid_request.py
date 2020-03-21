@@ -5,8 +5,7 @@ import os
 import datetime
 import glob
 import logging
-log = logging.getLogger()
-log.setLevel(logging.DEBUG)
+log = logging.getLogger(__name__)
 
 
 class CovIdRequest(CovId19Data):
