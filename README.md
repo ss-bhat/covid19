@@ -90,4 +90,8 @@ License: [MIT](https://github.com/gtkChop/covid19/blob/master/LICENSE)
 
 see also [contributors](https://github.com/gtkChop/covid19/graphs/contributors)
 
+## ChangeLog:
 
+* 1.1, 1.2, 1.3 - Initial Versions
+
+* 1.4 - Change in recovered cases in source CoViD data repository. 
