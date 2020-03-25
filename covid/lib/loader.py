@@ -5,9 +5,8 @@ import csv
 class CovId19Data:
 
     _actions_files = {
-        "confirmed": "time_series_19-covid-Confirmed.csv",
-        "deaths": "time_series_19-covid-Deaths.csv",
-        "recovered": "time_series_19-covid-Recovered.csv"
+        "confirmed": "time_series_covid19_confirmed_global.csv",
+        "deaths": "time_series_covid19_deaths_global.csv",
     }
 
     _geojson_file = "{}/{}".format(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), "countries.geojson")
