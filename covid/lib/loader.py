@@ -6,6 +6,7 @@ class CovId19Data:
 
     _actions_files = {
         "confirmed": "time_series_covid19_confirmed_global.csv",
+        "recovered": "time_series_covid19_recovered_global.csv",
         "deaths": "time_series_covid19_deaths_global.csv",
     }
 
