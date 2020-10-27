@@ -2,7 +2,7 @@ asn1crypto==1.3.0
 certifi==2019.11.28
 cffi==1.14.0
 chardet==3.0.4
-cryptography==2.8
+cryptography==3.2
 idna==2.8
 memory-profiler==0.57.0
 psutil==5.7.0
